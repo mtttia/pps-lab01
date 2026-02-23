@@ -7,8 +7,14 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class SmartDoorLockTest {
     private static final int VALID_PIN = 1234;
+    private static final int INVALID_PIN = 4321;
 
     private SmartDoorLock smartDoorLock;
+
+    private void lockSmartDoor (){
+        smartDoorLock.setPin(VALID_PIN);
+        smartDoorLock.lock();
+    }
 
     @BeforeEach
     void beforeEachInitializeSmartDoorLock(){
@@ -22,16 +28,23 @@ public class SmartDoorLockTest {
 
     @Test
     void testLockWithPin(){
-        smartDoorLock.setPin(VALID_PIN);
-        smartDoorLock.lock();
+        lockSmartDoor();
         assertTrue(smartDoorLock.isLocked());
     }
 
     @Test
     void testCanUnlockWithValidPin(){
-        smartDoorLock.setPin(VALID_PIN);
-        smartDoorLock.lock();
+        lockSmartDoor();
         smartDoorLock.unlock(VALID_PIN);
         assertFalse(smartDoorLock.isLocked());
+    }
+
+    @Test
+    void testBlockedAfterManyFailedUnlockAttempts(){
+        lockSmartDoor();
+        for(int i = 0; i < SmartDoorLockImpl.FAILURE_UNLOCK_ATTEMPTS_BEFORE_BLOCKING; i++){
+            smartDoorLock.unlock(INVALID_PIN);
+        }
+        assertTrue(smartDoorLock.isBlocked());
     }
 }
