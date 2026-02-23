@@ -8,6 +8,8 @@ import static org.junit.jupiter.api.Assertions.*;
 class MinMaxStackImplTest {
     private MinMaxStack minMaxStack;
     private static final int PUSH_VALUE = 1;
+    private static final int MINOR_VALUE = 3;
+    private static final int GREATER_VALUE = 5;
 
     @BeforeEach
     void beforeEach(){
@@ -41,5 +43,12 @@ class MinMaxStackImplTest {
     @Test
     void testCannotGetMinValueOnEmptyStack(){
         assertThrows(IllegalStateException.class, () -> minMaxStack.getMin());
+    }
+
+    @Test
+    void testCanGetMinValueAfterPushingValues(){
+        minMaxStack.push(MINOR_VALUE);
+        minMaxStack.push(GREATER_VALUE);
+        assertEquals(MINOR_VALUE, minMaxStack.getMin());
     }
 }

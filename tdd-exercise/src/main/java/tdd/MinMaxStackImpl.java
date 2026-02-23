@@ -4,14 +4,22 @@ import java.util.Stack;
 
 public class MinMaxStackImpl implements MinMaxStack {
     private final Stack<Integer> stack;
+    private final Stack<Integer> minStack;
 
     MinMaxStackImpl(){
         stack = new Stack<>();
+        minStack = new Stack<>();
     }
 
     @Override
     public void push(int value) {
         stack.push(value);
+        if(minStack.isEmpty() || value < minStack.peek()){
+            minStack.push(value);
+        }
+        else{
+            minStack.push(minStack.peek());
+        }
     }
 
     @Override
@@ -34,7 +42,11 @@ public class MinMaxStackImpl implements MinMaxStack {
 
     @Override
     public int getMin() {
-        throw new IllegalStateException("Stack is empty");
+        if(minStack.isEmpty())
+        {
+            throw new IllegalStateException("Stack is empty");
+        }
+        return minStack.peek();
     }
 
     @Override
