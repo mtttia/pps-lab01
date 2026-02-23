@@ -12,6 +12,19 @@ class MinMaxStackImplTest {
     private static final int GREATER_VALUE = 5;
     private static final int INITIAL_STACK_SIZE = 0;
 
+    private void pushValue(){
+        pushValue(PUSH_VALUE);
+    }
+
+    private void pushValue(int value){
+        minMaxStack.push(value);
+    }
+
+    private void pushValue(int firstValue, int secondValue){
+        pushValue(firstValue);
+        pushValue(secondValue);
+    }
+
     @BeforeEach
     void beforeEach(){
         minMaxStack = new MinMaxStackImpl();
@@ -30,7 +43,7 @@ class MinMaxStackImplTest {
 
     @Test
     void testPopAfterPushValue(){
-        minMaxStack.push(PUSH_VALUE);
+        pushValue();
         assertEquals(PUSH_VALUE, minMaxStack.pop());
         assertThrows(IllegalStateException.class, () -> minMaxStack.pop());
     }
@@ -42,7 +55,7 @@ class MinMaxStackImplTest {
 
     @Test
     void testCanPeekAfterPushValue() {
-        minMaxStack.push(PUSH_VALUE);
+        pushValue();
         assertEquals(PUSH_VALUE, minMaxStack.peek());
         assertEquals(1, minMaxStack.size());
         assertFalse(minMaxStack.isEmpty());
@@ -55,21 +68,19 @@ class MinMaxStackImplTest {
 
     @Test
     void testCanGetMinValueAfterPushingValues(){
-        minMaxStack.push(MINOR_VALUE);
-        minMaxStack.push(GREATER_VALUE);
+        pushValue(MINOR_VALUE, GREATER_VALUE);
         assertEquals(MINOR_VALUE, minMaxStack.getMin());
     }
 
     @Test
     void testCanGetMinValueAfterPushValue(){
-        minMaxStack.push(MINOR_VALUE);
+        pushValue(MINOR_VALUE);
         assertEquals(MINOR_VALUE, minMaxStack.getMin());
     }
 
     @Test
     void testCanGetMinValueAfterManyPushAndPop() {
-        minMaxStack.push(GREATER_VALUE);
-        minMaxStack.push(MINOR_VALUE);
+        pushValue(GREATER_VALUE, MINOR_VALUE);
         minMaxStack.pop();
         assertEquals(GREATER_VALUE, minMaxStack.getMin());
     }
@@ -81,15 +92,13 @@ class MinMaxStackImplTest {
 
     @Test
     void testCanGetMaxValueAfterPushingValues(){
-        minMaxStack.push(GREATER_VALUE);
-        minMaxStack.push(MINOR_VALUE);
+        pushValue(GREATER_VALUE, MINOR_VALUE);
         assertEquals(GREATER_VALUE, minMaxStack.getMax());
     }
 
     @Test
     void testCanGetMaxValueAfterManyPushAndPop() {
-        minMaxStack.push(MINOR_VALUE);
-        minMaxStack.push(GREATER_VALUE);
+        pushValue(MINOR_VALUE, GREATER_VALUE);
         minMaxStack.pop();
         assertEquals(MINOR_VALUE, minMaxStack.getMax());
     }
