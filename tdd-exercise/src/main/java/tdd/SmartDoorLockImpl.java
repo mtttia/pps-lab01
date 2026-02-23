@@ -1,10 +1,12 @@
 package tdd;
 
 public class SmartDoorLockImpl implements SmartDoorLock{
+    private boolean pinInitialized = false;
+    private boolean locked = false;
 
     @Override
     public void setPin(int pin) {
-
+        pinInitialized = true;
     }
 
     @Override
@@ -17,11 +19,12 @@ public class SmartDoorLockImpl implements SmartDoorLock{
         if(!isPinInitialized()){
             throw new IllegalStateException();
         }
+        locked = true;
     }
 
     @Override
     public boolean isLocked() {
-        return false;
+        return locked;
     }
 
     @Override
@@ -45,6 +48,6 @@ public class SmartDoorLockImpl implements SmartDoorLock{
     }
 
     private boolean isPinInitialized(){
-        return false;
+        return pinInitialized;
     }
 }
