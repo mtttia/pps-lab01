@@ -35,5 +35,6 @@ class MinMaxStackImplTest {
     void testCanPeekAfterPushValue() {
         minMaxStack.push(PUSH_VALUE);
         assertEquals(PUSH_VALUE, minMaxStack.peek());
+        assertDoesNotThrow(() -> minMaxStack.pop());
     }
 }
