@@ -52,7 +52,7 @@ public class MinMaxStackImpl implements MinMaxStack {
 
     @Override
     public int getMax() {
-        return 0;
+        throw new IllegalStateException("Stack is empty");
     }
 
     @Override
