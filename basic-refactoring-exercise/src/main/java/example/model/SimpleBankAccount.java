@@ -7,6 +7,8 @@ package example.model;
  */
 public class SimpleBankAccount implements BankAccount {
 
+    public static final double MINIMUM_WITHDRAW_AMOUNT = 0;
+
     private double balance;
     private final AccountHolder holder;
 
@@ -35,7 +37,7 @@ public class SimpleBankAccount implements BankAccount {
     }
 
     private boolean isWithdrawAllowed(final double amount){
-        return amount >= 0 && this.balance >= amount;
+        return amount >= MINIMUM_WITHDRAW_AMOUNT && this.balance >= amount;
     }
 
     private boolean isBankAccountHolder(final int id) {
