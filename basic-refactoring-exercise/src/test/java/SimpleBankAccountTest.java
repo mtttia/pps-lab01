@@ -28,7 +28,7 @@ class SimpleBankAccountTest {
     }
 
     @BeforeEach
-    void beforeEach() {
+    void initializeAccountHolderAndBankAccount() {
         accountHolder = new AccountHolder("Mario", "Rossi", RIGHT_USER_ID);
         bankAccount = new SimpleBankAccount(accountHolder, EMPTY_AMOUNT);
     }
@@ -39,7 +39,7 @@ class SimpleBankAccountTest {
     }
 
     @Test
-    void testDeposit() {
+    void testDepositOnRightAccount() {
         bankAccount.deposit(accountHolder.id(), LARGE_POSITIVE_AMOUNT);
         assertEquals(LARGE_POSITIVE_AMOUNT, bankAccount.getBalance());
     }
@@ -52,7 +52,7 @@ class SimpleBankAccountTest {
     }
 
     @Test
-    void testWithdraw() {
+    void testWithdrawWithCorrectAmount() {
         depositLargeAmountAndWithdrawSmallAmount(accountHolder.id(), accountHolder.id());
         int remainAmount = LARGE_POSITIVE_AMOUNT - SMALL_POSITIVE_AMOUNT;
         assertEquals(remainAmount, bankAccount.getBalance());
