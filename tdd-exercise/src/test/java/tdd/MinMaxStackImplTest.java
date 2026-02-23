@@ -20,13 +20,20 @@ class MinMaxStackImplTest {
     }
 
     @Test
-    void testPopAfterPushingAValue(){
+    void testPopAfterPushValue(){
         minMaxStack.push(PUSH_VALUE);
         assertEquals(PUSH_VALUE, minMaxStack.pop());
+        assertThrows(IllegalStateException.class, () -> minMaxStack.pop());
     }
 
     @Test
     void testCannotPeekOnEmptyStack(){
         assertThrows(IllegalStateException.class, () -> minMaxStack.peek());
+    }
+
+    @Test
+    void testCanPeekAfterPushValue() {
+        minMaxStack.push(PUSH_VALUE);
+        assertEquals(PUSH_VALUE, minMaxStack.peek());
     }
 }
