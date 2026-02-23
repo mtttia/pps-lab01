@@ -9,8 +9,8 @@ public class SimpleBankAccount implements BankAccount {
 
     public static final double MINIMUM_WITHDRAW_AMOUNT = 0;
 
-    protected double balance;
-    protected final AccountHolder holder;
+    private double balance;
+    private final AccountHolder holder;
 
     public SimpleBankAccount(final AccountHolder holder, final double balance) {
         this.holder = holder;
@@ -40,7 +40,7 @@ public class SimpleBankAccount implements BankAccount {
         return amount >= MINIMUM_WITHDRAW_AMOUNT && this.balance >= amount;
     }
 
-    protected boolean isBankAccountHolder(final int id) {
+    private boolean isBankAccountHolder(final int id) {
         return this.holder.id() == id;
     }
 }

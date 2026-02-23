@@ -8,25 +8,10 @@ import static org.junit.jupiter.api.Assertions.*;
 /**
  * The test suite for testing the SimpleBankAccount implementation
  */
-class SimpleBankAccountTest {
+class SimpleBankAccountTest extends BankAccountTest{
 
-    protected AccountHolder accountHolder;
-    protected BankAccount bankAccount;
-    protected static final int EMPTY_AMOUNT = 0;
-    protected static final int LARGE_POSITIVE_AMOUNT = 100;
-    protected static final int SMALL_POSITIVE_AMOUNT = 70;
-    protected static final int NEGATIVE_AMOUNT = -1;
-    protected static final int RIGHT_USER_ID = 1;
-    protected static final int WRONG_USER_ID = 2;
-
-    protected void depositAndWithdraw(int depositAccountId, int withdrawAccountId, int depositAmount, int withdrawAmount) {
-        bankAccount.deposit(depositAccountId, depositAmount);
-        bankAccount.withdraw(withdrawAccountId, withdrawAmount);
-    }
-
-    protected void depositLargeAmountAndWithdrawSmallAmount(int depositAccountId, int withdrawAccountId) {
-        depositAndWithdraw(depositAccountId, withdrawAccountId, LARGE_POSITIVE_AMOUNT, SMALL_POSITIVE_AMOUNT);
-    }
+    private AccountHolder accountHolder;
+    private BankAccount bankAccount;
 
     @BeforeEach
     void initializeAccountHolderAndBankAccount() {
@@ -34,46 +19,20 @@ class SimpleBankAccountTest {
         bankAccount = new SimpleBankAccount(accountHolder, EMPTY_AMOUNT);
     }
 
-    @Test
-    void testInitialBalance() {
-        assertEquals(EMPTY_AMOUNT, bankAccount.getBalance());
+    @Override
+    protected BankAccount getBankAccount() {
+        return bankAccount;
     }
 
-    @Test
-    void testDepositOnRightAccount() {
-        bankAccount.deposit(accountHolder.id(), LARGE_POSITIVE_AMOUNT);
-        assertEquals(LARGE_POSITIVE_AMOUNT, bankAccount.getBalance());
-    }
-
-    @Test
-    void testDepositOnWrongUserId() {
-        bankAccount.deposit(accountHolder.id(), LARGE_POSITIVE_AMOUNT);
-        bankAccount.deposit(WRONG_USER_ID, SMALL_POSITIVE_AMOUNT);
-        assertEquals(LARGE_POSITIVE_AMOUNT, bankAccount.getBalance());
+    @Override
+    protected AccountHolder getAccountHolder() {
+        return accountHolder;
     }
 
     @Test
     void testWithdrawWithCorrectAmount() {
-        depositLargeAmountAndWithdrawSmallAmount(accountHolder.id(), accountHolder.id());
-        int remainAmount = LARGE_POSITIVE_AMOUNT - SMALL_POSITIVE_AMOUNT;
-        assertEquals(remainAmount, bankAccount.getBalance());
-    }
-
-    @Test
-    void testWithdrawWithAmountGreaterThanBalance() {
-        depositAndWithdraw(accountHolder.id(), accountHolder.id(), SMALL_POSITIVE_AMOUNT, LARGE_POSITIVE_AMOUNT);
-        assertEquals(SMALL_POSITIVE_AMOUNT, bankAccount.getBalance());
-    }
-
-    @Test
-    void testWithdrawOnWrongUserId() {
-        depositLargeAmountAndWithdrawSmallAmount(accountHolder.id(), WRONG_USER_ID);
-        assertEquals(LARGE_POSITIVE_AMOUNT, bankAccount.getBalance());
-    }
-
-    @Test
-    void testWithdrawNegativeAmount(){
-        depositAndWithdraw(accountHolder.id(), accountHolder.id(), LARGE_POSITIVE_AMOUNT, NEGATIVE_AMOUNT);
-        assertEquals(LARGE_POSITIVE_AMOUNT, bankAccount.getBalance());
+        depositLargeAmountAndWithdrawSmallAmount(getAccountHolder().id(), getAccountHolder().id());
+        double remainAmount = LARGE_POSITIVE_AMOUNT - SMALL_POSITIVE_AMOUNT;
+        assertEquals(remainAmount, getBankAccount().getBalance());
     }
 }
