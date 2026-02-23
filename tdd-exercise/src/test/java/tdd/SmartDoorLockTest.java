@@ -7,7 +7,8 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class SmartDoorLockTest {
     private static final int VALID_PIN = 1234;
-    private static final int INVALID_PIN = 4321;
+    private static final int INVALID_PIN = 123;
+    private static final int WRONG_PIN = 4321;
     private static final int MAX_ATTEMPTS = 2;
 
     private SmartDoorLock smartDoorLock;
@@ -20,7 +21,7 @@ public class SmartDoorLockTest {
     private void blockSmartDoor(){
         lockSmartDoor();
         for(int i = 0; i < smartDoorLock.getMaxAttempts(); i++){
-            smartDoorLock.unlock(INVALID_PIN);
+            smartDoorLock.unlock(WRONG_PIN);
         }
     }
 
@@ -50,7 +51,7 @@ public class SmartDoorLockTest {
     @Test
     void testCannotUnlockWithInvalidPin(){
         lockSmartDoor();
-        smartDoorLock.unlock(INVALID_PIN);
+        smartDoorLock.unlock(WRONG_PIN);
         assertTrue(smartDoorLock.isLocked());
     }
 
@@ -76,9 +77,9 @@ public class SmartDoorLockTest {
     @Test
     void testAfterSuccessUnlockTheFailureAttemptCountReset(){
         lockSmartDoor();
-        smartDoorLock.unlock(INVALID_PIN);
+        smartDoorLock.unlock(WRONG_PIN);
         smartDoorLock.unlock(VALID_PIN);
-        smartDoorLock.unlock(INVALID_PIN);
+        smartDoorLock.unlock(WRONG_PIN);
         assertEquals(1, smartDoorLock.getFailedAttempts());
     }
 
@@ -99,10 +100,14 @@ public class SmartDoorLockTest {
     @Test
     void testSmartDoorLockFailureAttemptsReset(){
         lockSmartDoor();
-        smartDoorLock.unlock(INVALID_PIN);
+        smartDoorLock.unlock(WRONG_PIN);
         int failedAttempts = smartDoorLock.getFailedAttempts();
         smartDoorLock.reset();
         assertNotEquals(failedAttempts, smartDoorLock.getFailedAttempts());
     }
 
+    @Test
+    void testCannotSetInvalidPin(){
+        assertThrows(IllegalArgumentException.class, () -> smartDoorLock.setPin(INVALID_PIN));
+    }
 }

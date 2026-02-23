@@ -1,6 +1,8 @@
 package tdd;
 
 public class SmartDoorLockImpl implements SmartDoorLock{
+    private static final int PIN_DIGITS = 4;
+
 
     private final int maxAttempts;
     private boolean pinInitialized;
@@ -16,6 +18,9 @@ public class SmartDoorLockImpl implements SmartDoorLock{
 
     @Override
     public void setPin(int pin) {
+        if(!isPinValid(pin)){
+            throw new IllegalArgumentException();
+        }
         pinInitialized = true;
         this.pin = pin;
     }
@@ -74,5 +79,9 @@ public class SmartDoorLockImpl implements SmartDoorLock{
 
     private boolean isPinInitialized(){
         return pinInitialized;
+    }
+
+    private boolean isPinValid(int pin){
+        return String.valueOf(pin).length() == PIN_DIGITS;
     }
 }
