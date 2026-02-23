@@ -15,6 +15,7 @@ class SimpleBankAccountTest {
     private static final int EMPTY_AMOUNT = 0;
     private static final int LARGE_POSITIVE_AMOUNT = 100;
     private static final int SMALL_POSITIVE_AMOUNT = 70;
+    private static final int NEGATIVE_AMOUNT = -1;
     private static final int RIGHT_USER_ID = 1;
     private static final int WRONG_USER_ID = 2;
 
@@ -67,6 +68,12 @@ class SimpleBankAccountTest {
     @Test
     void testWithdrawOnWrongUserId() {
         depositLargeAmountAndWithdrawSmallAmount(accountHolder.id(), WRONG_USER_ID);
+        assertEquals(LARGE_POSITIVE_AMOUNT, bankAccount.getBalance());
+    }
+
+    @Test
+    void testWithdrawNegativeAmount(){
+        depositAndWithdraw(accountHolder.id(), accountHolder.id(), LARGE_POSITIVE_AMOUNT, NEGATIVE_AMOUNT);
         assertEquals(LARGE_POSITIVE_AMOUNT, bankAccount.getBalance());
     }
 }
