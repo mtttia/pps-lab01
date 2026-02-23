@@ -60,12 +60,12 @@ public class MinMaxStackImpl implements MinMaxStack {
 
     @Override
     public boolean isEmpty() {
-        return false;
+        return stack.isEmpty();
     }
 
     @Override
     public int size() {
-        return 0;
+        return stack.size();
     }
 
     private void pushMinStack(int value){

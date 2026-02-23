@@ -10,10 +10,17 @@ class MinMaxStackImplTest {
     private static final int PUSH_VALUE = 1;
     private static final int MINOR_VALUE = 3;
     private static final int GREATER_VALUE = 5;
+    private static final int INITIAL_STACK_SIZE = 0;
 
     @BeforeEach
     void beforeEach(){
         minMaxStack = new MinMaxStackImpl();
+    }
+
+    @Test
+    void testInitiallyStackIsEmpty(){
+        assertTrue(minMaxStack.isEmpty());
+        assertEquals(INITIAL_STACK_SIZE, minMaxStack.size());
     }
 
     @Test
@@ -37,7 +44,8 @@ class MinMaxStackImplTest {
     void testCanPeekAfterPushValue() {
         minMaxStack.push(PUSH_VALUE);
         assertEquals(PUSH_VALUE, minMaxStack.peek());
-        assertDoesNotThrow(() -> minMaxStack.pop());
+        assertEquals(1, minMaxStack.size());
+        assertFalse(minMaxStack.isEmpty());
     }
 
     @Test
