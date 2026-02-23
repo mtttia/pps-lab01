@@ -16,6 +16,13 @@ public class SmartDoorLockTest {
         smartDoorLock.lock();
     }
 
+    private void blockSmartDoor(){
+        lockSmartDoor();
+        for(int i = 0; i < SmartDoorLockImpl.FAILURE_UNLOCK_ATTEMPTS_BEFORE_BLOCKING; i++){
+            smartDoorLock.unlock(INVALID_PIN);
+        }
+    }
+
     @BeforeEach
     void beforeEachInitializeSmartDoorLock(){
         smartDoorLock = new SmartDoorLockImpl();
@@ -41,10 +48,20 @@ public class SmartDoorLockTest {
 
     @Test
     void testBlockedAfterManyFailedUnlockAttempts(){
-        lockSmartDoor();
-        for(int i = 0; i < SmartDoorLockImpl.FAILURE_UNLOCK_ATTEMPTS_BEFORE_BLOCKING; i++){
-            smartDoorLock.unlock(INVALID_PIN);
-        }
+        blockSmartDoor();
         assertTrue(smartDoorLock.isBlocked());
+    }
+
+    @Test
+    void testAfterSuccessUnlockIsNotBlocked(){
+        lockSmartDoor();
+        assertFalse(smartDoorLock.isBlocked());
+    }
+
+    @Test
+    void testWhenBlockedCannotUnlock(){
+        blockSmartDoor();
+        smartDoorLock.unlock(VALID_PIN);
+        assertTrue(smartDoorLock.isLocked());
     }
 }
