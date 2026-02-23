@@ -82,4 +82,11 @@ public class SmartDoorLockTest {
         assertEquals(1, smartDoorLock.getFailedAttempts());
     }
 
+    @Test
+    void testPinIsNotInitializedAfterReset(){
+        lockSmartDoor();
+        smartDoorLock.reset();
+        assertThrows(IllegalStateException.class, () -> smartDoorLock.lock());
+    }
+
 }
