@@ -51,4 +51,18 @@ class MinMaxStackImplTest {
         minMaxStack.push(GREATER_VALUE);
         assertEquals(MINOR_VALUE, minMaxStack.getMin());
     }
+
+    @Test
+    void testCanGetMinValueAfterPushValue(){
+        minMaxStack.push(MINOR_VALUE);
+        assertEquals(MINOR_VALUE, minMaxStack.getMin());
+    }
+
+    @Test
+    void testCanGetMinValueAfterManyPushAndPop() {
+        minMaxStack.push(GREATER_VALUE);
+        minMaxStack.push(MINOR_VALUE);
+        minMaxStack.pop();
+        assertEquals(GREATER_VALUE, minMaxStack.getMin());
+    }
 }

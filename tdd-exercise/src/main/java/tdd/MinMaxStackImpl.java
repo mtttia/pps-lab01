@@ -28,6 +28,7 @@ public class MinMaxStackImpl implements MinMaxStack {
         {
             throw new IllegalStateException("Stack is empty");
         }
+        minStack.pop();
         return stack.pop();
     }
 
