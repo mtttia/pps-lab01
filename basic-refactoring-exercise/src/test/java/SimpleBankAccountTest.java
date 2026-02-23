@@ -10,21 +10,21 @@ import static org.junit.jupiter.api.Assertions.*;
  */
 class SimpleBankAccountTest {
 
-    private AccountHolder accountHolder;
-    private BankAccount bankAccount;
-    private static final int EMPTY_AMOUNT = 0;
-    private static final int LARGE_POSITIVE_AMOUNT = 100;
-    private static final int SMALL_POSITIVE_AMOUNT = 70;
-    private static final int NEGATIVE_AMOUNT = -1;
-    private static final int RIGHT_USER_ID = 1;
-    private static final int WRONG_USER_ID = 2;
+    protected AccountHolder accountHolder;
+    protected BankAccount bankAccount;
+    protected static final int EMPTY_AMOUNT = 0;
+    protected static final int LARGE_POSITIVE_AMOUNT = 100;
+    protected static final int SMALL_POSITIVE_AMOUNT = 70;
+    protected static final int NEGATIVE_AMOUNT = -1;
+    protected static final int RIGHT_USER_ID = 1;
+    protected static final int WRONG_USER_ID = 2;
 
-    private void depositAndWithdraw(int depositAccountId, int withdrawAccountId, int depositAmount, int withdrawAmount) {
+    protected void depositAndWithdraw(int depositAccountId, int withdrawAccountId, int depositAmount, int withdrawAmount) {
         bankAccount.deposit(depositAccountId, depositAmount);
         bankAccount.withdraw(withdrawAccountId, withdrawAmount);
     }
 
-    private void depositLargeAmountAndWithdrawSmallAmount(int depositAccountId, int withdrawAccountId) {
+    protected void depositLargeAmountAndWithdrawSmallAmount(int depositAccountId, int withdrawAccountId) {
         depositAndWithdraw(depositAccountId, withdrawAccountId, LARGE_POSITIVE_AMOUNT, SMALL_POSITIVE_AMOUNT);
     }
 
