@@ -25,7 +25,7 @@ public class MinMaxStackImpl implements MinMaxStack {
 
     @Override
     public int peek() {
-        return 0;
+        throw new IllegalStateException("Stack is empty");
     }
 
     @Override

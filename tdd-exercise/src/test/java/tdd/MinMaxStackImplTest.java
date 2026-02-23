@@ -24,4 +24,9 @@ class MinMaxStackImplTest {
         minMaxStack.push(PUSH_VALUE);
         assertEquals(PUSH_VALUE, minMaxStack.pop());
     }
+
+    @Test
+    void testCannotPeekOnEmptyStack(){
+        assertThrows(IllegalStateException.class, () -> minMaxStack.peek());
+    }
 }
