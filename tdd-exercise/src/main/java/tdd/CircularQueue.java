@@ -15,4 +15,8 @@ package tdd;
  */
 public interface CircularQueue {
     boolean isEmpty();
+
+    void enqueue(int queueValue);
+
+    int size();
 }
