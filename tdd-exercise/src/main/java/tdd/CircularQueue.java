@@ -19,4 +19,6 @@ public interface CircularQueue {
     void enqueue(int queueValue);
 
     int size();
+
+    int dequeue();
 }

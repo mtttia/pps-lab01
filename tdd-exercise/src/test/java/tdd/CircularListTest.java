@@ -10,12 +10,13 @@ import static org.junit.jupiter.api.Assertions.*;
  */
 public class CircularListTest {
     private static final int QUEUE_VALUE = 5;
+    private static final int QUEUE_SIZE = 3;
 
     private CircularQueue circularQueue;
 
     @BeforeEach
     void beforeEach(){
-        circularQueue = new CircularQueueImpl();
+        circularQueue = new CircularQueueImpl(QUEUE_SIZE);
     }
 
     @Test
@@ -28,5 +29,17 @@ public class CircularListTest {
         circularQueue.enqueue(QUEUE_VALUE);
         assertEquals(1, circularQueue.size());
         assertFalse(circularQueue.isEmpty());
+    }
+
+    @Test
+    void testQueueStoreValuesAreStoredInACircularWay(){
+        for(int i = 0; i < QUEUE_SIZE; i++){
+            circularQueue.enqueue(i);
+        }
+        circularQueue.enqueue(QUEUE_VALUE);
+        for(int i = 1; i < QUEUE_SIZE; i++){
+            assertEquals(i, circularQueue.dequeue());
+        }
+        assertEquals(QUEUE_VALUE, circularQueue.dequeue());
     }
 }
