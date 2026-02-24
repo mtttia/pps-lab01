@@ -39,6 +39,9 @@ public class CircularQueueImpl implements CircularQueue {
 
     @Override
     public int dequeue() {
+        if(size() <= 0){
+           throw new IllegalStateException();
+        }
         int value = queue.get(queueStartIndex);
         increaseQueueStartIndex();
         return value;
