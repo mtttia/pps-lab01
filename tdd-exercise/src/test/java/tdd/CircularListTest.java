@@ -47,4 +47,11 @@ public class CircularListTest {
     void testCannotDequeueOnEmptyQueue(){
         assertThrows(IllegalStateException.class, () -> circularQueue.dequeue());
     }
+
+    @Test
+    void testAfterDequeueSizeIsCorrect(){
+        circularQueue.enqueue(QUEUE_VALUE);
+        circularQueue.dequeue();
+        assertEquals(0, circularQueue.size());
+    }
 }

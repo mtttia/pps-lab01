@@ -8,12 +8,14 @@ public class CircularQueueImpl implements CircularQueue {
     private final int queueSize;
     private int currentIndex;
     private int queueStartIndex;
+    private int currentSize;
 
     CircularQueueImpl(int queueSize){
         queue = new ArrayList<>();
         this.queueSize = queueSize;
         currentIndex = 0;
         queueStartIndex = 0;
+        currentSize = 0;
     }
 
     @Override
@@ -25,16 +27,19 @@ public class CircularQueueImpl implements CircularQueue {
     public void enqueue(int queueValue) {
         if(currentIndex >= queue.size()){
             queue.add(queueValue);
+            increaseCurrentIndex();
         }
         else{
             queue.set(currentIndex, queueValue);
+            increaseCurrentIndex();
+            increaseQueueStartIndex();
         }
-        increaseCurrentIndex();
+        currentSize++;
     }
 
     @Override
     public int size() {
-        return queue.size();
+        return currentSize;
     }
 
     @Override
@@ -44,13 +49,11 @@ public class CircularQueueImpl implements CircularQueue {
         }
         int value = queue.get(queueStartIndex);
         increaseQueueStartIndex();
+        currentSize--;
         return value;
     }
 
     private void increaseCurrentIndex(){
-        if(currentIndex == queueStartIndex){
-            increaseQueueStartIndex();
-        }
         currentIndex = (currentIndex + 1) % queueSize;
     }
 
