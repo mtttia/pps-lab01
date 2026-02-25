@@ -10,7 +10,7 @@ import static org.junit.jupiter.api.Assertions.*;
  */
 public class CircularListTest {
     private static final int QUEUE_VALUE = 5;
-    private static final int QUEUE_SIZE = 3;
+    private static final int QUEUE_SIZE = 5;
 
     private CircularQueue circularQueue;
 
